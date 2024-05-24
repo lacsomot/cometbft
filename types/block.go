@@ -656,6 +656,8 @@ func (cs CommitSig) ValidateBasic() error {
 
 	switch cs.BlockIDFlag {
 	case BlockIDFlagAbsent:
+		fmt.Println("len(cs.ValidatorAddress):", len(cs.ValidatorAddress))
+		fmt.Println("cs.ValidatorAddress:", cs.ValidatorAddress)
 		if len(cs.ValidatorAddress) != 0 {
 			return errors.New("validator address is present")
 		}
