@@ -285,6 +285,7 @@ func (bs *BlockStore) LoadBlockExtendedCommit(height int64) *types.ExtendedCommi
 // a new block at `height + 1` that includes this commit in its block.LastCommit.
 func (bs *BlockStore) LoadSeenCommit(height int64) *types.Commit {
 	pbc := new(cmtproto.Commit)
+	fmt.Println("LoadSeenCommit height:", height)
 	bz, err := bs.db.Get(calcSeenCommitKey(height))
 	if err != nil {
 		panic(err)
