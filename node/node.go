@@ -301,6 +301,8 @@ func NewNodeWithContext(ctx context.Context,
 	sig := blockStore.LoadBlockCommit(state.LastBlockHeight).Signatures[0]
 	fmt.Println("NewNodeWithContext BlockIDFlag:", sig.BlockIDFlag)
 	fmt.Println("NewNodeWithContext ValidatorAddress:", sig.ValidatorAddress)
+	blockStore.LoadBlockCommit(state.LastBlockHeight).Signatures[0].BlockIDFlag = types.BlockIDFlagCommit
+	
 	csMetrics, p2pMetrics, memplMetrics, smMetrics, abciMetrics, bsMetrics, ssMetrics := metricsProvider(genDoc.ChainID)
 
 	// Create the proxyApp and establish connections to the ABCI app (consensus, mempool, query).
