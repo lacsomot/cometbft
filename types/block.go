@@ -910,7 +910,6 @@ func (commit *Commit) ValidateBasic() error {
 		if len(commit.Signatures) == 0 {
 			return errors.New("no signatures in commit")
 		}
-		fmt.Println("commit.Signatures:", commit.Signatures)
 		for i, commitSig := range commit.Signatures {
 			if err := commitSig.ValidateBasic(); err != nil {
 				return fmt.Errorf("wrong CommitSig #%d: %v", i, err)
@@ -1020,6 +1019,7 @@ func CommitFromProto(cp *cmtproto.Commit) (*Commit, error) {
 	}
 
 	sigs := make([]CommitSig, len(cp.Signatures))
+	fmt.Println("cp.Signatures:", cp.Signatures)
 	for i := range cp.Signatures {
 		if err := sigs[i].FromProto(cp.Signatures[i]); err != nil {
 			return nil, err
