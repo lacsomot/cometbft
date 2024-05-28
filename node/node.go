@@ -298,11 +298,6 @@ func NewNodeWithContext(ctx context.Context,
 		return nil, err
 	}
 
-	sig := blockStore.LoadBlockCommit(state.LastBlockHeight).Signatures[0]
-	fmt.Println("NewNodeWithContext BlockIDFlag:", sig.BlockIDFlag)
-	fmt.Println("NewNodeWithContext ValidatorAddress:", sig.ValidatorAddress)
-	blockStore.LoadBlockCommit(state.LastBlockHeight).Signatures[0].BlockIDFlag = types.BlockIDFlagCommit
-	
 	csMetrics, p2pMetrics, memplMetrics, smMetrics, abciMetrics, bsMetrics, ssMetrics := metricsProvider(genDoc.ChainID)
 
 	// Create the proxyApp and establish connections to the ABCI app (consensus, mempool, query).
@@ -401,6 +396,13 @@ func NewNodeWithContext(ctx context.Context,
 	if err != nil {
 		return nil, fmt.Errorf("could not create blocksync reactor: %w", err)
 	}
+
+	sig := blockStore.LoadSeenCommit(state.LastBlockHeight)
+	fmt.Println("NewNodeWithContext BlockIDFlag:", sig.Signatures[0].BlockIDFlag)
+	fmt.Println("NewNodeWithContext ValidatorAddress:", sig.Signatures[0].ValidatorAddress)
+	sig.Signatures[0].BlockIDFlag = types.BlockIDFlagAbsent
+
+	blockStore.SaveSeenCommit(state.LastBlockHeight, sig)
 
 	consensusReactor, consensusState := createConsensusReactor(
 		config, state, blockExec, blockStore, mempool, evidencePool,
