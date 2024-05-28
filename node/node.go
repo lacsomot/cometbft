@@ -284,7 +284,7 @@ func NewNodeWithContext(ctx context.Context,
 	logger log.Logger,
 	options ...Option,
 ) (*Node, error) {
-	blockStore, stateDB, err := initDBs(config, dbProvider)
+	blockStore, stateDB, err := initInjDBs(config, dbProvider, genesisDocProvider)
 	if err != nil {
 		return nil, err
 	}
