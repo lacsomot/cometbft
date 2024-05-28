@@ -400,7 +400,7 @@ func NewNodeWithContext(ctx context.Context,
 	sig := blockStore.LoadSeenCommit(state.LastBlockHeight)
 	fmt.Println("NewNodeWithContext BlockIDFlag:", sig.Signatures[0].BlockIDFlag)
 	fmt.Println("NewNodeWithContext ValidatorAddress:", sig.Signatures[0].ValidatorAddress)
-	sig.Signatures[0].BlockIDFlag = types.BlockIDFlagAbsent
+	sig.Signatures[0].BlockIDFlag = types.BlockIDFlagCommit
 
 	blockStore.SaveSeenCommit(state.LastBlockHeight, sig)
 
