@@ -289,6 +289,8 @@ func NewNodeWithContext(ctx context.Context,
 		return nil, err
 	}
 
+	fmt.Println("config:", config.DBDir())
+	fmt.Println("backend:", config.DBBackend)
 	stateStore := sm.NewStore(stateDB, sm.StoreOptions{
 		DiscardABCIResponses: config.Storage.DiscardABCIResponses,
 	})
